@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Texto con fondo azul/negro en movimiento</title>
+  <style>
+    :root{
+      --blue:#0a58ca;   /* azul */
+      --black:#000000;  /* negro */
+      --gap:50%;        /* proporción azul/negro */
+    }
+
+    /* Reset mínimo */
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#111;
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      padding:2rem;
+      color:#fff;
+    }
+
+    /* Contenedor con fondo animado (gradiente que se mueve) */
+    .moving-bg{
+      --speed:8s; /* ajusta la velocidad de la animación */
+      display:inline-block;
+      padding:1rem 1.25rem;
+      border-radius:0.5rem;
+      color:#fff;                /* texto blanco */
+      font-weight:700;
+      letter-spacing:0.02em;
+      /* Fondo: gradiente dividido en dos colores */
+      background:linear-gradient(90deg, var(--blue) 0 var(--gap), var(--black) var(--gap) 100%);
+      background-size:200% 100%;
+      animation: slide var(--speed) linear infinite;
+      /* opcional: sombra para resaltar el texto */
+      text-shadow:0 1px 0 rgba(0,0,0,0.5);
+    }
+
+    /* Si quieres el fondo "enmascarado" sólo detrás del texto y no ocupar todo el contenedor */
+    .clip {
+      display:inline-block;
+      padding:0.15em 0.3em;
+      border-radius:0.3rem;
+      background-clip: padding-box; /* importante para controlar el relleno */
+    }
+
+    @keyframes slide{
+      0%{background-position:0% 50%}
+      100%{background-position:200% 50%}
+    }
+
+    /* Variantes: tamaño y velocidad */
+    .huge{font-size:2rem;padding:0.5rem 0.9rem}
+    .large{font-size:1.25rem}
+    .slow{--speed:12s}
+    .fast{--speed:3s}
+
+    /* Ejemplo con bloqueo de línea (fondo detrás de toda la línea) */
+    .block{
+      display:block;
+      width:100%;
+      max-width:900px;
+      padding:0.75rem 1rem;
+      border-radius:0.6rem;
+      margin:0.5rem 0;
+    }
+
+    /* Ajustes responsivos */
+    @media (max-width:600px){
+      .huge{font-size:1.4rem}
+    }
+
+    /* Opcional: efecto suave al pasar el ratón */
+    .moving-bg:hover{filter:brightness(1.05)}
+  </style>
+</head>
+<body>
+  <main>
+    <h1 style="margin-bottom:1rem;color:#fff;font-weight:600">Ejemplos de texto con fondo azul y negro en movimiento</h1>
+
+    <!-- Fondo sólo detrás del texto corto -->
+    <p>
+      <span class="moving-bg clip large">Texto con fondo azul/negro animado</span>
+    </p>
+
+    <!-- Variante grande y rápida -->
+    <p style="margin-top:1rem">
+      <span class="moving-bg clip huge fast">Aviso importante</span>
+    </p>
+
+    <!-- Bloque de línea completo (ocupando ancho) -->
+    <div class="moving-bg block slow">
+      <span>Banner completo con fondo animado — texto en blanco</span>
+    </div>
+
+    <!-- Ejemplo con varias palabras resaltadas -->
+    <p style="margin-top:1rem;line-height:1.6;max-width:900px">
+      Aquí tienes un párrafo normal y <span class="moving-bg clip">palabra resaltada</span> en medio del texto. También puedes combinar varias <span class="moving-bg clip">frases</span> para diferentes llamadas a la acción.
+    </p>
+
+    <p style="margin-top:1rem;opacity:0.8;font-size:0.9rem">Puedes ajustar la variable <code>--speed</code> (velocidad), <code>--gap</code> (proporción azul/negro) o los colores en :root para personalizar el efecto.</p>
+  </main>
+</body>
+</html>
