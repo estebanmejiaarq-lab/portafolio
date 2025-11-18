@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Textos con fondo en movimiento</title>
+  <style>
+    :root{
+      --gap: 24px;
+      --radius: 14px;
+      --pad: 18px 28px;
+    }
+
+    body{
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:var(--gap);
+      padding:40px;
+      background: #0f172a;
+      box-sizing:border-box;
+    }
+
+    .card{
+      display:inline-block;
+      position:relative;
+      border-radius:var(--radius);
+      padding:var(--pad);
+      overflow:visible; /* dejamos que el fondo animado se vea fuera si queremos */
+    }
+
+    /* Contenedor del texto con fondo animado (usa pseudo-elemento) */
+    .moving-bg{
+      position:relative;
+      display:inline-block;
+      border-radius:12px;
+      padding:10px 18px;
+      font-weight:700;
+      font-size:28px;
+      line-height:1;
+      isolation:isolate; /* para que el pseudo-elemento no afecte a otros elementos */
+    }
+
+    /* el fondo animado detrás del texto */
+    .moving-bg::before{
+      content:'';
+      position:absolute;
+      inset:0; /* ocupa todo el contenedor */
+      z-index: -1; /* detrás del texto */
+      border-radius:inherit;
+      filter: blur(14px) saturate(120%);
+      transform: translateZ(0);
+      /* diseño base — se sobreescribe en variantes */
+      background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      background-size: 300% 100%;
+      animation: move 6s linear infinite;
+      opacity:0.95;
+    }
+
+    /* variante azul */
+    .moving-bg.blue::before{
+      background: linear-gradient(120deg, rgba(3,105,255,0.9), rgba(0,210,255,0.7) 40%, rgba(10,30,60,0.15) 70%);
+      background-size: 200% 200%;
+      animation: move 6s linear infinite;
+      box-shadow: 0 6px 22px rgba(3,105,255,0.18);
+    }
+
+    /* variante negro / gris oscuro */
+    .moving-bg.black::before{
+      background: linear-gradient(120deg, rgba(10,10,10,0.95), rgba(50,50,50,0.85) 30%, rgba(120,120,120,0.06) 60%);
+      background-size: 180% 180%;
+      animation: moveReverse 8s linear infinite;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+
+    /* texto en sí (color solicitado) */
+    .moving-bg.blue{ color:#0b6eff; }
+    .moving-bg.black{ color:#06121a; }
+
+    /* otra variante: texto claro sobre fondo oscuro */
+    .moving-bg.black.light-text{ color:#f5f7fa; text-shadow: 0 1px 0 rgba(0,0,0,0.5); }
+
+    /* animaciones: movemos la posición de fondo para que dé la sensación de flujo */
+    @keyframes move{
+      0%{ background-position: 0% 50%; }
+      50%{ background-position: 100% 50%; }
+      100%{ background-position: 0% 50%; }
+    }
+
+    @keyframes moveReverse{
+      0%{ background-position: 100% 50%; }
+      50%{ background-position: 0% 50%; }
+      100%{ background-position: 100% 50%; }
+    }
+
+    /* opcional: responsividad */
+    @media (max-width:640px){
+      .moving-bg{ font-size:20px; padding:8px 14px; }
+    }
+
+    /* decoración adicional */
+    .stack{ display:flex; flex-direction:column; gap:18px; align-items:center; }
+
+    .hint{ color:#9aa7bf; font-size:13px; margin-top:8px; text-align:center }
+
+  </style>
+</head>
+<body>
+  <div class="stack">
+    <div class="card">
+      <span class="moving-bg blue">PROYECTO 1</span>
+    </div>
+
+    <div class="card">
+      <span class="moving-bg black light-text">Texto con fondo negro/oscuro en movimiento</span>
+    </div>
+
+    <div class="hint">Copia este archivo en un <code>.html</code> y ábrelo en tu
