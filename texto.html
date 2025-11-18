@@ -80,7 +80,7 @@
     .moving-bg.black{ color:#06121a; }
 
     /* otra variante: texto claro sobre fondo oscuro */
-    .moving-bg.black.light-text{ color:#f5f7fa; text-shadow: 0 1px 0 rgba(0,0,0,0.5); }
+    .moving-bg.black.light-text{ color:white; text-shadow: 0 1px 0 rgba(0,0,0,0.5); }
 
     /* animaciones: movemos la posición de fondo para que dé la sensación de flujo */
     @keyframes move{
@@ -110,11 +110,21 @@
 <body>
   <div class="stack">
     <div class="card">
-      <span class="moving-bg blue">PROYECTO 1</span>
+      <span class="moving-bg blue">Texto con fondo azul en movimiento</span>
     </div>
 
     <div class="card">
-      <span class="moving-bg black light-text"> </span>
+      <span class="moving-bg black light-text">Texto con fondo negro/oscuro en movimiento</span>
     </div>
 
-    <div class="hint">Copia este archivo en un <code>.html</code> y ábrelo en tu
+    <div class="hint">Copia este archivo en un <code>.html</code> y ábrelo en tu navegador. Cambia las clases <code>.blue</code> o <code>.black</code> para probar variantes.</div>
+  </div>
+
+  <!-- Opciones rápidas: ajustar velocidad desde JavaScript (opcional) -->
+  <script>
+    // ejemplo: cambiar la duración de la animación en tiempo real
+    // const elems = document.querySelectorAll('.moving-bg::before'); /* no funciona directamente con pseudo-elementos */
+    // en vez de eso, ajustamos usando una clase CSS modificada o variable CSS si lo prefieres.
+  </script>
+</body>
+</html>
